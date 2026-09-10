@@ -36,8 +36,7 @@ public class BillPayPage {
 
     // Navigate to bill pay page
     public void open() {
-        WebElement billPayLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Bill Pay")));
-        billPayLink.click();
+        driver.get("https://parabank.parasoft.com/parabank/billpay.htm");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("payee.name")));
     }
 

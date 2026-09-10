@@ -11,7 +11,7 @@ public class BillPaymentTest extends BaseTest {
 
     @BeforeEach
     public void goToBillPay() {
-        login("john", "demo");  // login first
+        login("navaneeth", "demo");  // login first
         billPayPage = new BillPayPage(driver);
         billPayPage.open();     // then open bill pay
     }
