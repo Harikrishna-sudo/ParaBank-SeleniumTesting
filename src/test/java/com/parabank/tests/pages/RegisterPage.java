@@ -60,13 +60,8 @@ public class RegisterPage {
         wait.until(ExpectedConditions.elementToBeClickable(registerBtn)).click();
     }
 
-    /**
-     * ParaBank shows a "Welcome" heading inside #rightPanel after successful registration.
-     * It also shows the Log Out link in the nav. We check both to be safe.
-     */
     public boolean isRegistrationSuccessful() {
         try {
-            // Primary check: welcome text in the result panel
             WebElement panel = wait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.id("rightPanel")));
             String text = panel.getText();
@@ -77,7 +72,6 @@ public class RegisterPage {
             }
         } catch (Exception ignored) {}
 
-        // Fallback: Log Out link appears in nav when logged in
         try {
             return driver.findElement(By.linkText("Log Out")).isDisplayed();
         } catch (Exception e) {
@@ -85,18 +79,14 @@ public class RegisterPage {
         }
     }
 
-    /**
-     * Returns the "This username already exists." error text, or empty string if not shown.
-     */
+
     public String getUsernameTakenError() {
         try {
-            // ParaBank renders: <span id="customer.username.errors">This username already exists.</span>
             WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.id("customer.username.errors")));
             return el.getText().trim();
         } catch (Exception ignored) {}
 
-        // Fallback: search by text content
         try {
             WebElement el = driver.findElement(By.xpath(
                     "//span[contains(text(),'username already exists') or " +
@@ -107,12 +97,8 @@ public class RegisterPage {
         return "";
     }
 
-    /**
-     * Returns the inline validation error for a given field.
-     * ParaBank error span IDs follow the pattern: customer.firstName.errors
-     */
     public String getFieldError(String fieldId) {
-        // fieldId is the full id, e.g. "customer.firstName"
+        
         try {
             WebElement el = driver.findElement(By.id(fieldId + ".errors"));
             if (el.isDisplayed()) return el.getText().trim();
