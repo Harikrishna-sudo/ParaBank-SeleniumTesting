@@ -16,7 +16,6 @@ public class BaseTest {
 
         driver.manage().window().maximize();
 
-        driver.get("https://parabank.parasoft.com/parabank/index.htm");
     }
 
     @AfterMethod

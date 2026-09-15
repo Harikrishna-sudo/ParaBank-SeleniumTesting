@@ -16,6 +16,13 @@ public class UpdateContactInfoTest extends BaseTest {
     private String username = "john";
     private String password = "demo";
 
+    // ============================================================
+    // PARABANK URL
+    // ============================================================
+
+    private String paraBankUrl =
+            "https://parabank.parasoft.com/parabank/index.htm";
+
 
     // ============================================================
     // TEST 1
@@ -25,7 +32,10 @@ public class UpdateContactInfoTest extends BaseTest {
     @Test
     public void verifyUserCanSuccessfullyUpdateAddress() {
 
-        // Step 1: Login
+        // Step 1: Open ParaBank
+        driver.get(paraBankUrl);
+
+        // Step 2: Login using common team LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.login(username, password);
@@ -36,13 +46,13 @@ public class UpdateContactInfoTest extends BaseTest {
                 "Login failed. Accounts Overview page was not displayed."
         );
 
-        // Step 2: Open Update Contact Info
+        // Step 3: Open Update Contact Info
         UpdateContactInfoPage contactPage =
                 new UpdateContactInfoPage(driver);
 
         contactPage.clickUpdateContactInfo();
 
-        // Step 3: Enter new address
+        // Step 4: Enter new address
         String street = "123 Test Street";
         String city = "Hyderabad";
         String state = "Telangana";
@@ -55,10 +65,10 @@ public class UpdateContactInfoTest extends BaseTest {
                 zipCode
         );
 
-        // Step 4: Submit
+        // Step 5: Submit
         contactPage.clickUpdateProfile();
 
-        // Step 5: Verify successful update
+        // Step 6: Verify successful update
         Assert.assertTrue(
                 driver.getPageSource().contains("Profile Updated"),
                 "Profile was not updated successfully."
@@ -74,7 +84,10 @@ public class UpdateContactInfoTest extends BaseTest {
     @Test
     public void verifyUserCanSuccessfullyUpdatePhoneNumber() {
 
-        // Step 1: Login
+        // Step 1: Open ParaBank
+        driver.get(paraBankUrl);
+
+        // Step 2: Login using common team LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.login(username, password);
@@ -85,21 +98,23 @@ public class UpdateContactInfoTest extends BaseTest {
                 "Login failed. Accounts Overview page was not displayed."
         );
 
-        // Step 2: Open Update Contact Info
+        // Step 3: Open Update Contact Info
         UpdateContactInfoPage contactPage =
                 new UpdateContactInfoPage(driver);
 
         contactPage.clickUpdateContactInfo();
 
-        // Step 3: Enter phone number
+        // Step 4: Enter phone number
         String phoneNumber = "9876543210";
 
-        contactPage.updatePhoneNumber(phoneNumber);
+        contactPage.updatePhoneNumber(
+                phoneNumber
+        );
 
-        // Step 4: Submit
+        // Step 5: Submit
         contactPage.clickUpdateProfile();
 
-        // Step 5: Verify successful update
+        // Step 6: Verify successful update
         Assert.assertTrue(
                 driver.getPageSource().contains("Profile Updated"),
                 "Phone number was not updated successfully."
@@ -116,7 +131,10 @@ public class UpdateContactInfoTest extends BaseTest {
     @Test
     public void verifyUpdatedProfilePersistsAfterNavigation() {
 
-        // Step 1: Login
+        // Step 1: Open ParaBank
+        driver.get(paraBankUrl);
+
+        // Step 2: Login using common team LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.login(username, password);
@@ -127,13 +145,13 @@ public class UpdateContactInfoTest extends BaseTest {
                 "Login failed. Accounts Overview page was not displayed."
         );
 
-        // Step 2: Open Update Contact Info
+        // Step 3: Open Update Contact Info
         UpdateContactInfoPage contactPage =
                 new UpdateContactInfoPage(driver);
 
         contactPage.clickUpdateContactInfo();
 
-        // Step 3: Enter new address and phone number
+        // Step 4: Enter new address and phone number
         String street = "456 Persistence Avenue";
         String city = "Chennai";
         String state = "Tamil Nadu";
@@ -151,16 +169,16 @@ public class UpdateContactInfoTest extends BaseTest {
                 phoneNumber
         );
 
-        // Step 4: Submit
+        // Step 5: Submit
         contactPage.clickUpdateProfile();
 
-        // Step 5: Verify profile update was successful
+        // Step 6: Verify profile update was successful
         Assert.assertTrue(
                 driver.getPageSource().contains("Profile Updated"),
                 "Profile was not updated successfully."
         );
 
-        // Step 6: Navigate away from the profile page
+        // Step 7: Navigate away from the profile page
         driver.navigate().to(
                 "https://parabank.parasoft.com/parabank/overview.htm"
         );
@@ -171,10 +189,10 @@ public class UpdateContactInfoTest extends BaseTest {
                 "Overview page was not displayed after navigation."
         );
 
-        // Step 7: Return to Update Contact Info
+        // Step 8: Return to Update Contact Info
         contactPage.clickUpdateContactInfo();
 
-        // Step 8: Verify the contact form is available
+        // Step 9: Verify the contact form is available
         Assert.assertTrue(
                 driver.findElement(
                         By.id("customer.address.street")
@@ -220,7 +238,10 @@ public class UpdateContactInfoTest extends BaseTest {
     @Test
     public void verifyErrorWhenMandatoryFieldsAreCleared() {
 
-        // Step 1: Login
+        // Step 1: Open ParaBank
+        driver.get(paraBankUrl);
+
+        // Step 2: Login using common team LoginPage
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.login(username, password);
@@ -231,25 +252,25 @@ public class UpdateContactInfoTest extends BaseTest {
                 "Login failed. Accounts Overview page was not displayed."
         );
 
-        // Step 2: Open Update Contact Info
+        // Step 3: Open Update Contact Info
         UpdateContactInfoPage contactPage =
                 new UpdateContactInfoPage(driver);
 
         contactPage.clickUpdateContactInfo();
 
-        // Step 3: Clear mandatory address fields
+        // Step 4: Clear mandatory address fields
         contactPage.enterStreet("");
         contactPage.enterCity("");
         contactPage.enterState("");
         contactPage.enterZipCode("");
 
-        // Step 4: Submit the form
+        // Step 5: Submit the form
         contactPage.clickUpdateProfile();
 
-        // Step 5: Get page content
+        // Step 6: Get page content
         String pageSource = driver.getPageSource();
 
-        // Step 6: Verify validation error is displayed
+        // Step 7: Verify validation error is displayed
         Assert.assertTrue(
                 pageSource.contains("required")
                         || pageSource.contains("Required")
