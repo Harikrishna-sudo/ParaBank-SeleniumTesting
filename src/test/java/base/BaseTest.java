@@ -1,27 +1,23 @@
 package base;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
 
     protected WebDriver driver;
-    String baseUrl="https://parabank-17m8.onrender.com/parabank/";
+    protected String baseUrl = "https://parabank-17m8.onrender.com/parabank";
 
-    @BeforeMethod
+    @BeforeEach
     public void setUp() {
-
         driver = new ChromeDriver();
-
         driver.manage().window().maximize();
-
     }
 
-    @AfterMethod
+    @AfterEach
     public void tearDown() {
-
         if (driver != null) {
             driver.quit();
         }

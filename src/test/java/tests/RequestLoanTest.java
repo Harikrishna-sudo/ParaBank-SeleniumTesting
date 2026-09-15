@@ -14,6 +14,7 @@ public class RequestLoanTest extends BaseTest {
     @Test
     public void verifyLoanRequestApproval() {
 
+        driver.get(baseUrl+"/index.htm");
         // Step 1: Login
 
         LoginPage loginPage = new LoginPage(driver);
