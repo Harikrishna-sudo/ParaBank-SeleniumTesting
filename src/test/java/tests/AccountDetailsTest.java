@@ -15,6 +15,7 @@ public class AccountDetailsTest extends BaseTest {
     @Test
     public void verifyAccountDetails() {
 
+        driver.get(baseUrl+"/index.htm");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 

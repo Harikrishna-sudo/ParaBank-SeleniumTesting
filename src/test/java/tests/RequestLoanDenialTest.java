@@ -13,6 +13,7 @@ public class RequestLoanDenialTest extends BaseTest {
     @Test
     public void verifyLoanRequestDenial() {
 
+        driver.get(baseUrl+"/index.htm");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 

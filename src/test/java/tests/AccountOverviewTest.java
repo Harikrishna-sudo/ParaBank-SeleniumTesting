@@ -14,6 +14,7 @@ public class AccountOverviewTest extends BaseTest {
     @Test
     public void verifyApprovedLoanCreatesNewAccount() {
 
+        driver.get(baseUrl+"/index.htm");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 

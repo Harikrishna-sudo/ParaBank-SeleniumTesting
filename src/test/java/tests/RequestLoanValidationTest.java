@@ -22,6 +22,7 @@ public class RequestLoanValidationTest extends BaseTest {
     })
     public void verifyInvalidLoanRequest(String loanAmount, String downPayment) {
 
+        driver.get(baseUrl+"/index.htm");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 

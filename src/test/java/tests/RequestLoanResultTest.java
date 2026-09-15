@@ -13,6 +13,7 @@ public class RequestLoanResultTest extends BaseTest {
     @Test
     public void verifyLoanResultStatus() {
 
+        driver.get(baseUrl+"/index.htm");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 
