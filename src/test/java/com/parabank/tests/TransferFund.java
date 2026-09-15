@@ -15,8 +15,7 @@ public class TransferFund {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    @BeforeAll
-    login();
+    
     @BeforeEach
     void goToTransferFunds() {
 
