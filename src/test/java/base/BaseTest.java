@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 public class BaseTest {
 
     protected WebDriver driver;
+    String baseUrl="https://parabank-17m8.onrender.com/parabank/";
 
     @BeforeMethod
     public void setUp() {
