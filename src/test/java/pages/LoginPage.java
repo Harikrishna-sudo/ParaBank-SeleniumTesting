@@ -1,7 +1,9 @@
-package pages;
+package com.parabank.tests.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -9,70 +11,73 @@ import java.time.Duration;
 
 public class LoginPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
+    private final JavascriptExecutor js;
 
-    private WebDriverWait wait;
+    private final By usernameField = By.name("username");
+    private final By passwordField = By.name("password");
+    private final By loginButton   = By.xpath("//input[@value='Log In']");
+    private final By errorMessage  = By.cssSelector("p.error");
 
-    // Username field
-    private By usernameField =
-            By.name("username");
-
-    // Password field
-    private By passwordField =
-            By.name("password");
-
-    // Login button
-    private By loginButton =
-            By.xpath("//input[@value='Log In']");
-
-    // Constructor
     public LoginPage(WebDriver driver) {
-
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.js = (JavascriptExecutor) driver;
+    }
 
-        this.wait = new WebDriverWait(
-                driver,
-                Duration.ofSeconds(10)
+    public void enterUsername(String username) {
+        WebElement field = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(usernameField)
+        );
+
+        js.executeScript(
+                "arguments[0].value = arguments[1];" +
+                        "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));" +
+                        "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
+                field,
+                username
         );
     }
 
-    // Enter username
-    public void enterUsername(String username) {
-
-        wait.until(
-                ExpectedConditions.visibilityOfElementLocated(usernameField)
-        ).clear();
-
-        driver.findElement(usernameField)
-                .sendKeys(username);
-    }
-
-    // Enter password
     public void enterPassword(String password) {
-
-        wait.until(
+        WebElement field = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(passwordField)
-        ).clear();
+        );
 
-        driver.findElement(passwordField)
-                .sendKeys(password);
+        js.executeScript(
+                "arguments[0].value = arguments[1];" +
+                        "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));" +
+                        "arguments[0].dispatchEvent(new Event('change', {bubbles:true}));",
+                field,
+                password
+        );
     }
 
-    // Click Login
-    public void clickLogin() {
-
-        wait.until(
-                ExpectedConditions.elementToBeClickable(loginButton)
-        ).click();
+    public void clickLoginButton() {
+        driver.findElement(loginButton).click();
     }
 
-    // Complete login
     public void login(String username, String password) {
-
         enterUsername(username);
-
         enterPassword(password);
+        clickLoginButton();
+    }
 
-        clickLogin();
+    public String getErrorMessage() {
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(errorMessage)
+        ).getText();
+    }
+
+    public boolean isErrorDisplayed() {
+        try {
+            wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(errorMessage)
+            );
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

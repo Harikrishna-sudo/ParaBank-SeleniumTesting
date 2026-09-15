@@ -1,10 +1,10 @@
 package tests;
 
 import base.BaseTest;
+import com.parabank.tests.pages.LoginPage;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 import pages.UpdateContactInfoPage;
 
 public class UpdateContactInfoTest extends BaseTest {
@@ -15,6 +15,7 @@ public class UpdateContactInfoTest extends BaseTest {
 
     private String username = "john";
     private String password = "demo";
+
 
     // ============================================================
     // TEST 1
@@ -67,7 +68,7 @@ public class UpdateContactInfoTest extends BaseTest {
 
     // ============================================================
     // TEST 2
-    // Verify user can successfully update phone number
+    // Verify user can successfully update their phone number
     // ============================================================
 
     @Test
@@ -78,7 +79,7 @@ public class UpdateContactInfoTest extends BaseTest {
 
         loginPage.login(username, password);
 
-        // Verify login
+        // Verify login was successful
         Assert.assertTrue(
                 driver.getPageSource().contains("Accounts Overview"),
                 "Login failed. Accounts Overview page was not displayed."
@@ -108,7 +109,8 @@ public class UpdateContactInfoTest extends BaseTest {
 
     // ============================================================
     // TEST 3
-    // Verify profile update flow remains available after navigation away and back
+    // Verify profile update flow remains available
+    // after navigating away and returning
     // ============================================================
 
     @Test
@@ -119,6 +121,7 @@ public class UpdateContactInfoTest extends BaseTest {
 
         loginPage.login(username, password);
 
+        // Verify login was successful
         Assert.assertTrue(
                 driver.getPageSource().contains("Accounts Overview"),
                 "Login failed. Accounts Overview page was not displayed."
@@ -137,47 +140,73 @@ public class UpdateContactInfoTest extends BaseTest {
         String zipCode = "600001";
         String phoneNumber = "9000000001";
 
-        contactPage.updateAddress(street, city, state, zipCode);
-        contactPage.updatePhoneNumber(phoneNumber);
+        contactPage.updateAddress(
+                street,
+                city,
+                state,
+                zipCode
+        );
+
+        contactPage.updatePhoneNumber(
+                phoneNumber
+        );
 
         // Step 4: Submit
         contactPage.clickUpdateProfile();
 
-        // Step 5: Verify profile update success
+        // Step 5: Verify profile update was successful
         Assert.assertTrue(
                 driver.getPageSource().contains("Profile Updated"),
                 "Profile was not updated successfully."
         );
 
-        // Step 6: Navigate away and return
-        driver.navigate().to("https://parabank.parasoft.com/parabank/overview.htm");
+        // Step 6: Navigate away from the profile page
+        driver.navigate().to(
+                "https://parabank.parasoft.com/parabank/overview.htm"
+        );
 
+        // Verify Overview page was displayed
         Assert.assertTrue(
                 driver.getPageSource().contains("Accounts Overview"),
                 "Overview page was not displayed after navigation."
         );
 
+        // Step 7: Return to Update Contact Info
         contactPage.clickUpdateContactInfo();
 
-        // Step 7: Verify the contact form is available after returning
+        // Step 8: Verify the contact form is available
         Assert.assertTrue(
-                driver.findElement(By.id("customer.address.street")).isDisplayed(),
+                driver.findElement(
+                        By.id("customer.address.street")
+                ).isDisplayed(),
                 "Street field was not available after returning to the profile page."
         );
+
         Assert.assertTrue(
-                driver.findElement(By.id("customer.address.city")).isDisplayed(),
+                driver.findElement(
+                        By.id("customer.address.city")
+                ).isDisplayed(),
                 "City field was not available after returning to the profile page."
         );
+
         Assert.assertTrue(
-                driver.findElement(By.id("customer.address.state")).isDisplayed(),
+                driver.findElement(
+                        By.id("customer.address.state")
+                ).isDisplayed(),
                 "State field was not available after returning to the profile page."
         );
+
         Assert.assertTrue(
-                driver.findElement(By.id("customer.address.zipCode")).isDisplayed(),
+                driver.findElement(
+                        By.id("customer.address.zipCode")
+                ).isDisplayed(),
                 "ZIP code field was not available after returning to the profile page."
         );
+
         Assert.assertTrue(
-                driver.findElement(By.id("customer.phoneNumber")).isDisplayed(),
+                driver.findElement(
+                        By.id("customer.phoneNumber")
+                ).isDisplayed(),
                 "Phone field was not available after returning to the profile page."
         );
     }
@@ -196,7 +225,7 @@ public class UpdateContactInfoTest extends BaseTest {
 
         loginPage.login(username, password);
 
-        // Verify login
+        // Verify login was successful
         Assert.assertTrue(
                 driver.getPageSource().contains("Accounts Overview"),
                 "Login failed. Accounts Overview page was not displayed."
@@ -217,9 +246,10 @@ public class UpdateContactInfoTest extends BaseTest {
         // Step 4: Submit the form
         contactPage.clickUpdateProfile();
 
-        // Step 5: Verify an error is displayed
+        // Step 5: Get page content
         String pageSource = driver.getPageSource();
 
+        // Step 6: Verify validation error is displayed
         Assert.assertTrue(
                 pageSource.contains("required")
                         || pageSource.contains("Required")
