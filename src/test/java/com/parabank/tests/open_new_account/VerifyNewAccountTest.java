@@ -1,4 +1,4 @@
-package com.parabank.tests.openNewAccount;
+package com.parabank.tests.open_new_account;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
