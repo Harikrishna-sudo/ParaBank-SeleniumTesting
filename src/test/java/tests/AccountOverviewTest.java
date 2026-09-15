@@ -1,7 +1,7 @@
 package tests;
 
 import base.BaseTest;
-import pages.LoginPage;
+import com.parabank.tests.pages.LoginPage;
 import pages.RequestLoanPage;
 import pages.AccountsOverviewPage;
 

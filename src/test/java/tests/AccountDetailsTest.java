@@ -1,10 +1,10 @@
 package tests;
 
 import base.BaseTest;
-import pages.LoginPage;
 import pages.RequestLoanPage;
 import pages.AccountsOverviewPage;
 import pages.AccountDetailsPage;
+import com.parabank.tests.pages.LoginPage;
 
 import org.junit.jupiter.api.Test;
 
