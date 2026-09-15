@@ -15,7 +15,23 @@ public class TransferFund {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    
+
+    @BeforeAll
+    void setup() {
+
+        driver = new EdgeDriver();
+        driver.manage().window().maximize();
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        driver.get(
+                "https://parabank-17m8.onrender.com/parabank/index.htm?ConnType=JDBC");
+
+        login();
+
+        openTransferFundsPage();
+    }
+
     @BeforeEach
     void goToTransferFunds() {
 
@@ -41,10 +57,10 @@ public class TransferFund {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                         By.name("username")))
-                .sendKeys("testng");
+                .sendKeys("john");
 
         driver.findElement(By.name("password"))
-                .sendKeys("testng");
+                .sendKeys("demo");
 
         driver.findElement(By.xpath("//input[@value='Log In']"))
                 .click();
@@ -53,7 +69,13 @@ public class TransferFund {
                 By.xpath("//h2[normalize-space()='Account Services']")));
     }
 
-    
+    @AfterAll
+    void tearDown() {
+
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
     private void openTransferFundsPage() {
 
