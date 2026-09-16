@@ -12,6 +12,27 @@ import java.time.Duration;
 
 public class FindTransactionsTest extends BaseTest {
 
+    @BeforeEach
+    public void setUp() {
+
+        driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        // Open ParaBank
+        driver.get("https://parabank-17m8.onrender.com/parabank/index.htm");
+
+        // Login
+        driver.findElement(By.name("username"))
+                .sendKeys("john");
+
+        driver.findElement(By.name("password"))
+                .sendKeys("demo");
+
+        driver.findElement(By.xpath("//input[@value='Log In']"))
+                .click();
+    }
+    
     @Test
     @DisplayName("TS035 - Transaction search by ID returns the matching transaction")
     public void verifyTransactionSearchById() {
@@ -114,6 +135,14 @@ public class FindTransactionsTest extends BaseTest {
                     actualAmount,
                     "Returned transaction amount should match the searched amount"
             );
+        }
+    }
+
+    @AfterEach
+    public void tearDown() {
+
+        if (driver != null) {
+            driver.quit();
         }
     }
 }
