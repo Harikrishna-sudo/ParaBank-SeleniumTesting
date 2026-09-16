@@ -10,27 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class FindTransactionsTest extends BaseTest {
-
-    @BeforeEach
-    public void setUp() {
-
-        driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        // Open ParaBank
-        driver.get("https://parabank-17m8.onrender.com/parabank/index.htm");
-
-        // Login
-        driver.findElement(By.name("username"))
-                .sendKeys("john");
-
-        driver.findElement(By.name("password"))
-                .sendKeys("demo");
-
-        driver.findElement(By.xpath("//input[@value='Log In']"))
-                .click();
-    }
     
     @Test
     public void verifyTransactionSearchById() {
@@ -134,11 +113,4 @@ public class FindTransactionsTest extends BaseTest {
         }
     }
 
-    @AfterEach
-    public void tearDown() {
-
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
