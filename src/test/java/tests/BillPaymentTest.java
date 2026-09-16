@@ -12,7 +12,7 @@ public class BillPaymentTest extends BaseTest {
 
     @BeforeEach
     public void goToBillPay() {
-        login("navaneeth", "demo");  // login first
+        login("john", "demo");  // login first
         billPayPage = new BillPayPage(driver);
         billPayPage.open();     // then open bill pay
     }
