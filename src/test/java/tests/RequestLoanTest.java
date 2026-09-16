@@ -1,9 +1,10 @@
 package tests;
 
 import base.BaseTest;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 import pages.RequestLoanPage;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RequestLoanTest extends BaseTest {
 
     @Test
+    @DisplayName("TS022 - Loan request with sufficient down payment is approved")
     public void verifyLoanRequestApproval() {
 
         driver.get(baseUrl+"/index.htm");

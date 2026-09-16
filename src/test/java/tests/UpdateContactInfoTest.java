@@ -1,7 +1,7 @@
 package tests;
 
 import base.BaseTest;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -29,7 +29,7 @@ public class UpdateContactInfoTest extends BaseTest {
     // Verify user can successfully update their address
     // ============================================================
 
-    @Test
+    @Test(description = "TS031 - User can successfully update their contact address")
     public void verifyUserCanSuccessfullyUpdateAddress() {
 
         // Step 1: Open ParaBank
@@ -81,7 +81,7 @@ public class UpdateContactInfoTest extends BaseTest {
     // Verify user can successfully update their phone number
     // ============================================================
 
-    @Test
+    @Test(description = "TS032 - User can successfully update their phone number")
     public void verifyUserCanSuccessfullyUpdatePhoneNumber() {
 
         // Step 1: Open ParaBank
@@ -128,7 +128,7 @@ public class UpdateContactInfoTest extends BaseTest {
     // after navigating away and returning
     // ============================================================
 
-    @Test
+    @Test(description = "TS033 - Profile update remains accessible after navigating away and returning")
     public void verifyUpdatedProfilePersistsAfterNavigation() {
 
         // Step 1: Open ParaBank
@@ -235,7 +235,7 @@ public class UpdateContactInfoTest extends BaseTest {
     // Verify error when mandatory fields are cleared
     // ============================================================
 
-    @Test
+    @Test(description = "TS034 - Clearing mandatory fields on update profile shows validation error")
     public void verifyErrorWhenMandatoryFieldsAreCleared() {
 
         // Step 1: Open ParaBank

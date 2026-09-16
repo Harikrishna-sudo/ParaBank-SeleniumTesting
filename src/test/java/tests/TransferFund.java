@@ -1,5 +1,8 @@
+package tests;
+
 import java.time.Duration;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -179,6 +182,7 @@ public class TransferFund {
      * by exactly the transferred amount.
      */
     @Test
+    @DisplayName("TS026 - Source account balance decreases by the transferred amount")
     void verifySourceAccountBalanceDecreasesByTransferredAmount() throws InterruptedException {
 
         String fromAccountId =
@@ -221,6 +225,7 @@ public class TransferFund {
      * by exactly the transferred amount.
      */
     @Test
+    @DisplayName("TS027 - Destination account balance increases by the transferred amount")
     void verifyDestinationAccountBalanceIncreasesByTransferredAmount() throws InterruptedException {
 
         String fromAccountId =
@@ -262,6 +267,7 @@ public class TransferFund {
      * Enter non-numeric or invalid characters.
      */
     @Test
+    @DisplayName("TS028 - Transfer with non-numeric amount is rejected with an error")
     void shouldRejectInvalidCharactersInAmountField() {
 
         String fromAccountId =
@@ -294,6 +300,7 @@ public class TransferFund {
      * Verify net balance remains unchanged.
      */
     @Test
+    @DisplayName("TS029 - Transfer between the same account leaves balance unchanged")
     void verifySameSourceAndDestinationAccountHasNoBalanceChange() throws InterruptedException {
 
         String accountId =
@@ -323,6 +330,7 @@ public class TransferFund {
                 "Balance should remain unchanged for same-account transfer.");
     }
     @Test
+    @DisplayName("TS030 - Transfer with a negative amount is processed by the system")
     void shouldNotAllowNegativeAmountTransfer() {
 
         submitTransfer("-10");

@@ -1,6 +1,7 @@
-package com.parabank.tests;
+package tests;
 
-import com.parabank.tests.pages.BillPayPage;
+import base.BaseTest;
+import pages.BillPayPage;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,7 @@ public class BillPaymentTest extends BaseTest {
     // ── TC-001 ─────────────────────────────────────────────────────
     @Test
     @Order(1)
-    @DisplayName("TC-001: Successful payment with valid payee details")
+    @DisplayName("TS007 - Successful payment with valid payee details")
     public void testSuccessfulBillPayment() {
         billPayPage.fillValidForm("50.00");
         billPayPage.clickSend();
@@ -35,7 +36,7 @@ public class BillPaymentTest extends BaseTest {
     // ── TC-002 ─────────────────────────────────────────────────────
     @Test
     @Order(2)
-    @DisplayName("TC-002/003/004/005: Submit with required fields empty")
+    @DisplayName("TS008 - Submit bill payment with required fields empty")
     public void testEmptyRequiredFields() {
         // Click Send without filling anything
         billPayPage.clickSend();
@@ -56,7 +57,7 @@ public class BillPaymentTest extends BaseTest {
     // ── TC-003 ─────────────────────────────────────────────────────
     @Test
     @Order(3)
-    @DisplayName("TC-003: Validation failure when account numbers do not match")
+    @DisplayName("TS009 - Validation failure when account numbers do not match")
     public void testMismatchedAccountNumbers() {
         billPayPage.fillValidForm("50.00");
         // deliberately mismatch verifyAccount
@@ -71,7 +72,7 @@ public class BillPaymentTest extends BaseTest {
     // ── TC-004 ─────────────────────────────────────────────────────
     @Test
     @Order(4)
-    @DisplayName("TC-004: Bill payment with zero amount is accepted and confirmed")
+    @DisplayName("TS010 - Bill payment with zero amount is accepted and confirmed")
     public void testZeroAmountPayment() {
         // Fill all fields with valid data but set amount to 0
         billPayPage.fillValidForm("0");

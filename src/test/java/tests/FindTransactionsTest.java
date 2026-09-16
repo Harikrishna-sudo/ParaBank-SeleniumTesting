@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FindTransactionsPage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +13,7 @@ import java.time.Duration;
 public class FindTransactionsTest extends BaseTest {
 
     @Test
+    @DisplayName("TS035 - Transaction search by ID returns the matching transaction")
     public void verifyTransactionSearchById() {
 
         FindTransactionsPage findTransactionsPage =
@@ -42,6 +44,7 @@ public class FindTransactionsTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("TS036 - Transaction search by date returns only transactions for that date")
     public void verifyTransactionSearchByDate() {
 
         FindTransactionsPage findTransactionsPage =
@@ -78,6 +81,7 @@ public class FindTransactionsTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("TS037 - Transaction search by amount returns only transactions matching that amount")
     public void verifyTransactionSearchByAmount() {
 
         FindTransactionsPage findTransactionsPage =

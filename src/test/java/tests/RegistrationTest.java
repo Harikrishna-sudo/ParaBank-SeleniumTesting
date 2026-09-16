@@ -1,6 +1,7 @@
-package com.parabank.tests;
+package tests;
 
-import com.parabank.tests.pages.RegisterPage;
+import base.BaseTest;
+import pages.RegisterPage;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ public class RegistrationTest extends BaseTest {
     // ── TC-REG-001 ──
     @Test
     @Order(1)
-    @DisplayName("TC-REG-001: Successful registration with valid data")
+    @DisplayName("TS004 - Successful registration with valid data")
     public void testSuccessfulRegistration() {
         registerPage.fillForm(
                 "Helen", "Test",
@@ -39,7 +40,7 @@ public class RegistrationTest extends BaseTest {
     // ── TC-REG-002 ──
     @Test
     @Order(2)
-    @DisplayName("TC-REG-002: Registration fails when username already exists")
+    @DisplayName("TS005 - Registration fails when username already exists")
     public void testDuplicateUsernameRejected() {
         registerPage.fillForm(
                 "John", "Doe",
@@ -57,7 +58,7 @@ public class RegistrationTest extends BaseTest {
     // ── TC-REG-003 ──
     @Test
     @Order(3)
-    @DisplayName("TC-REG-003: Registration fails when required fields are empty")
+    @DisplayName("TS006 - Registration fails when required fields are empty")
     public void testEmptyFieldsShowValidationErrors() {
         registerPage.clickRegister();
 

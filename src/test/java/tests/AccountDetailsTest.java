@@ -4,8 +4,9 @@ import base.BaseTest;
 import pages.RequestLoanPage;
 import pages.AccountsOverviewPage;
 import pages.AccountDetailsPage;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountDetailsTest extends BaseTest {
 
     @Test
+    @DisplayName("TS021 - Verify account details page shows correct number, type, and balance after loan approval")
     public void verifyAccountDetails() {
 
         driver.get(baseUrl+"/index.htm");

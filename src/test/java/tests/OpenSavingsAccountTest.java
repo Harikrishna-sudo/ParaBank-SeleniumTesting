@@ -1,4 +1,4 @@
-package com.parabank.tests.open_new_account;
+package tests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,7 +62,7 @@ public class OpenSavingsAccountTest {
     }
 
     @Test
-    @DisplayName("Successfully open a new CHECKING account funded from an existing account")
+    @DisplayName("TS018 - Successfully open a new SAVINGS account funded from an existing account")
     void openCheckingAccount() {
 
         // Navigate to Open New Account

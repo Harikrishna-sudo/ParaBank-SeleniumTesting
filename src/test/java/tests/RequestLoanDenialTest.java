@@ -1,9 +1,10 @@
 package tests;
 
 import base.BaseTest;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 import pages.RequestLoanPage;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RequestLoanDenialTest extends BaseTest {
 
     @Test
+    @DisplayName("TS023 - Loan request with insufficient down payment is denied")
     public void verifyLoanRequestDenial() {
 
         driver.get(baseUrl+"/index.htm");

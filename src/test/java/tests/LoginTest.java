@@ -1,6 +1,7 @@
-package com.parabank.tests;
+package tests;
 
-import com.parabank.tests.pages.LoginPage;
+import base.BaseTest;
+import pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +42,7 @@ public class LoginTest extends BaseTest {
 
         WebDriver regDriver = new ChromeDriver(opts);
         try {
-            regDriver.get("https://parabank.parasoft.com/parabank/register.htm");
+            regDriver.get(baseUrl+"/register.htm");
             WebDriverWait w = new WebDriverWait(regDriver, Duration.ofSeconds(15));
 
             w.until(ExpectedConditions.visibilityOfElementLocated(By.id("customer.firstName")));
@@ -87,9 +88,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-LOG-001: Successful login with valid credentials")
+    @DisplayName("TS001 - Successful login with valid credentials")
     public void testSuccessfulLogin() {
-        loginPage.login(validUsername, validPassword);
+        loginPage.login("john", "demo");
         String currentUrl = driver.getCurrentUrl();
         String pageTitle  = driver.getTitle();
         System.out.println("[TEST] URL   : " + currentUrl);
@@ -101,7 +102,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-LOG-002: Login fails with invalid password")
+    @DisplayName("TS002 - Login fails with invalid password")
     public void testLoginWithInvalidPassword() {
         loginPage.login(validUsername, "wrongpassword");
         assertTrue(loginPage.isErrorDisplayed(), "Expected error message to be shown");
@@ -113,7 +114,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-LOG-003: Login fails with empty username and password")
+    @DisplayName("TS003 - Login fails with empty username and password")
     public void testLoginWithEmptyCredentials() {
         loginPage.login("", "");
         assertTrue(loginPage.isErrorDisplayed(), "Expected error message for empty fields");

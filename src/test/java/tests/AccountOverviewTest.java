@@ -1,10 +1,11 @@
 package tests;
 
 import base.BaseTest;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 import pages.RequestLoanPage;
 import pages.AccountsOverviewPage;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AccountOverviewTest extends BaseTest {
 
     @Test
+    @DisplayName("TS020 - Approved loan request creates a new account visible in Accounts Overview")
     public void verifyApprovedLoanCreatesNewAccount() {
 
         driver.get(baseUrl+"/index.htm");

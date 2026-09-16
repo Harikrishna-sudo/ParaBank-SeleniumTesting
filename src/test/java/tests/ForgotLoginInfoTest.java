@@ -1,6 +1,7 @@
-package com.parabank.tests;
+package tests;
 
-import com.parabank.tests.pages.ForgotLoginInfoPage;
+import base.BaseTest;
+import pages.ForgotLoginInfoPage;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -59,7 +60,7 @@ public class ForgotLoginInfoTest extends BaseTest {
     // ── TC-001 ─────────────────────────────────────────────────────
     @Test
     @Order(1)
-    @DisplayName("TC-001: Successfully retrieve forgotten username by supplying valid identity information")
+    @DisplayName("TS011 - Successfully retrieve forgotten username with valid identity information")
     public void testRetrieveForgottenUsernameWithValidIdentity() {
         String[] user = registerUniqueUser();
         String firstName = user[0], lastName = user[1], street = user[2],
@@ -84,7 +85,7 @@ public class ForgotLoginInfoTest extends BaseTest {
     // ── TC-002 ─────────────────────────────────────────────────────
     @Test
     @Order(2)
-    @DisplayName("TC-002: Successfully reset/retrieve password by supplying valid identity and username information")
+    @DisplayName("TS012 - Successfully retrieve password with valid identity and username information")
     public void testRetrievePasswordWithValidIdentityAndUsername() {
         String[] user = registerUniqueUser();
         String firstName = user[0], lastName = user[1], street = user[2],
@@ -111,7 +112,7 @@ public class ForgotLoginInfoTest extends BaseTest {
     // ── TC-003 ─────────────────────────────────────────────────────
     @Test
     @Order(3)
-    @DisplayName("TC-003: Submit the lookup form with identity information that does not match any customer record")
+    @DisplayName("TS013 - Lookup fails when identity information does not match any customer record")
     public void testLookupWithNonMatchingIdentityInformation() {
         // Navigate to lookup page
         forgotLoginPage.open(BASE_URL);

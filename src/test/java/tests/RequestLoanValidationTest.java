@@ -1,9 +1,10 @@
 package tests;
 
 import base.BaseTest;
-import com.parabank.tests.pages.LoginPage;
+import pages.LoginPage;
 import pages.RequestLoanPage;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RequestLoanValidationTest extends BaseTest {
 
     @ParameterizedTest
+    @DisplayName("TS025 - Invalid loan request inputs are rejected or denied")
     @CsvSource({
             ",50",
             "0,50",

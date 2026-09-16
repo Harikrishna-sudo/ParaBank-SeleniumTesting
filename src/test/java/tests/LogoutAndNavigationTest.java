@@ -1,3 +1,5 @@
+package tests;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -32,7 +34,7 @@ public class LogoutAndNavigationTest {
     }
 
     @ParameterizedTest(name="[{index}] {0}")
-    @DisplayName("Logged In Navigaton Test")
+    @DisplayName("TS014 - Logged-in navigation reaches correct page titles")
     @Order(1)
     @CsvSource({
             "/openaccount.htm, ParaBank | Open Account",
@@ -53,7 +55,7 @@ public class LogoutAndNavigationTest {
 
 
     @Test
-    @DisplayName("Logout Test")
+    @DisplayName("TS015 - Logout redirects to the welcome page")
     @Order(2)
     void afterLogoutStateTest(){
 
@@ -66,7 +68,7 @@ public class LogoutAndNavigationTest {
     }
 
     @ParameterizedTest(name="[{index}] {0}")
-    @DisplayName("Logged Out Navigation Test")
+    @DisplayName("TS016 - Accessing protected pages after logout shows error")
     @ValueSource(strings = {
             "/openaccount.htm",
             "/overview.htm",

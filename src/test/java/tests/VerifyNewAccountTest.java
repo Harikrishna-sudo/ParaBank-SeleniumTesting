@@ -1,4 +1,4 @@
-package com.parabank.tests.open_new_account;
+package tests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +63,7 @@ public class VerifyNewAccountTest {
     }
 
     @Test
-    @DisplayName("Verify the new account details after creation")
+    @DisplayName("TS019 - Verify new account number and type match after account creation")
     void verifyNewAccount() {
 
         Random random = new Random();
@@ -190,9 +190,9 @@ public class VerifyNewAccountTest {
                 newAccountNumber,
                 actualAccountNumber,
                 "Account number mismatch. Expected: "
-                        + newAccountNumber
-                        + ", Actual: "
-                        + actualAccountNumber
+                    + newAccountNumber
+                    + ", Actual: "
+                    + actualAccountNumber
         );
 
         // Verify account type
@@ -200,9 +200,9 @@ public class VerifyNewAccountTest {
                 expectedAccountType,
                 actualAccountType,
                 "Account type mismatch. Expected: "
-                        + expectedAccountType
-                        + ", Actual: "
-                        + actualAccountType
+                    + expectedAccountType
+                    + ", Actual: "
+                    + actualAccountType
         );
 
         System.out.println("Expected Account Number: " + newAccountNumber);
