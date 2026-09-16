@@ -28,8 +28,8 @@ public class OpenCheckingAccountTest {
     private static final String BASE_URL =
             "https://parabank-17m8.onrender.com/parabank/index.htm";
 
-    private static final String USERNAME = "Patrick Jane";
-    private static final String PASSWORD = "Jane@123";
+    private static final String USERNAME = "john";
+    private static final String PASSWORD = "demo";
 
     @BeforeEach
     void setUp() {
