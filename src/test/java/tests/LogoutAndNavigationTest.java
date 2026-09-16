@@ -26,10 +26,11 @@ public class LogoutAndNavigationTest {
 
         username.sendKeys("john");
         password.sendKeys("demo");
-//        Thread.sleep(2000);
         loginBtn.click();
+        Thread.sleep(2000);
 
         String title=driver.getTitle();
+        System.out.println(title);
         assertTrue(title.contains("Overview"));
     }
 

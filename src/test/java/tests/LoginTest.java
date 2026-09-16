@@ -100,11 +100,11 @@ public class LoginTest extends BaseTest {
             "Expected successful login. URL=" + currentUrl + " | Title=" + pageTitle
         );
     }
-/*
+
     @Test
     @DisplayName("TS002 - Login fails with invalid password")
     public void testLoginWithInvalidPassword() {
-        loginPage.login("john", "wrongpassword");
+        loginPage.login("johnwithwrongpassword", "wrongpassword");
         assertTrue(loginPage.isErrorDisplayed(), "Expected error message to be shown");
         assertTrue(driver.getCurrentUrl().contains("login.htm"),
             "Expected to remain on login page");
@@ -112,7 +112,7 @@ public class LoginTest extends BaseTest {
         assertFalse(error.isEmpty(), "Expected non-empty error message");
         System.out.println("[TEST] Error: " + error);
     }
-*/
+
     @Test
     @DisplayName("TS003 - Login fails with empty username and password")
     public void testLoginWithEmptyCredentials() {
