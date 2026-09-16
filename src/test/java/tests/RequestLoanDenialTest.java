@@ -22,8 +22,8 @@ public class RequestLoanDenialTest extends BaseTest {
         RequestLoanPage loanPage = new RequestLoanPage(driver);
         loanPage.openRequestLoan();
 
-        loanPage.enterLoanAmount("50000");
-        loanPage.enterDownPayment("0");
+        loanPage.enterLoanAmount("100");
+        loanPage.enterDownPayment("1");
 
         loanPage.selectFirstAvailableAccount();
 
