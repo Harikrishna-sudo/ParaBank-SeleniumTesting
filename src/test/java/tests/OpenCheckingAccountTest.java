@@ -4,15 +4,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Random;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,135 +28,254 @@ public class OpenCheckingAccountTest {
     private static final String BASE_URL =
             "https://parabank-17m8.onrender.com/parabank/index.htm";
 
-    private static final String USERNAME = "Patrick Jane";
-    private static final String PASSWORD = "Jane@123";
+    private static final String USERNAME = "john";
+    private static final String PASSWORD = "demo";
 
     @BeforeEach
     void setUp() {
+
+        // Start Chrome browser
         driver = new ChromeDriver();
 
+        // Explicit wait
         wait = new WebDriverWait(
                 driver,
-                Duration.ofSeconds(20)
+                Duration.ofSeconds(30)
         );
 
+        // Maximize browser
         driver.manage().window().maximize();
 
         // Open ParaBank
         driver.get(BASE_URL);
 
-        // Login
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.name("username")
-        )).sendKeys(USERNAME);
+        // -----------------------------
+        // LOGIN
+        // -----------------------------
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.name("password")
-        )).sendKeys(PASSWORD);
+        WebElement usernameField =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        By.name("username")
+                ));
 
+        usernameField.clear();
+        usernameField.sendKeys(USERNAME);
+
+        WebElement passwordField =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        By.name("password")
+                ));
+
+        passwordField.clear();
+        passwordField.sendKeys(PASSWORD);
+
+        // Click Login
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.cssSelector("input[type='submit']")
         )).click();
 
-        // Wait until login has completed
-        wait.until(ExpectedConditions.elementToBeClickable(
+        // Wait until login completes
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.linkText("Open New Account")
         ));
+
+        System.out.println("Login successful.");
     }
 
     @Test
-    @DisplayName("TS017 - Successfully open a new CHECKING account funded from an existing account")
+    @DisplayName(
+            "TS017 - Successfully open a new CHECKING account funded from an existing account"
+    )
     void openCheckingAccount() {
 
-        // Navigate to Open New Account
+        // -----------------------------
+        // STEP 1: OPEN NEW ACCOUNT PAGE
+        // -----------------------------
+
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.linkText("Open New Account")
         )).click();
 
-        // Wait for account type dropdown
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.id("type")
-        ));
+        // -----------------------------
+        // STEP 2: SELECT CHECKING
+        // -----------------------------
 
-        Select accountType = new Select(
-                driver.findElement(By.id("type"))
-        );
+        WebElement accountTypeElement =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        By.id("type")
+                ));
 
-        // Select CHECKING
+        Select accountType =
+                new Select(accountTypeElement);
+
+        // ParaBank:
+        // 0 = CHECKING
+        // 1 = SAVINGS
         accountType.selectByValue("0");
 
-        // Wait for the funding account dropdown
+        System.out.println("Account type selected: CHECKING");
+
+        // -----------------------------
+        // STEP 3: WAIT FOR FUNDING ACCOUNTS
+        // -----------------------------
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.id("fromAccountId")
         ));
 
-        // Wait until the required account option is actually present
-        wait.until(driver -> {
-            Select select = new Select(
-                    driver.findElement(By.id("fromAccountId"))
+        /*
+         * IMPORTANT:
+         *
+         * Do NOT wait for a specific account number such as 13566.
+         *
+         * ParaBank can generate different account numbers.
+         *
+         * Instead, wait until at least one valid account
+         * exists in the dropdown.
+         */
+        wait.until(webDriver -> {
+
+            Select fundingDropdown = new Select(
+                    webDriver.findElement(By.id("fromAccountId"))
             );
 
-            return select.getOptions()
-                    .stream()
-                    .anyMatch(option ->
-                            option.getAttribute("value").equals("13566")
-                    );
+            List<WebElement> accounts =
+                    fundingDropdown.getOptions();
+
+            return !accounts.isEmpty();
         });
 
-        // Select existing account
-        Select fromAccount = new Select(
-                driver.findElement(By.id("fromAccountId"))
+        // -----------------------------
+        // STEP 4: SELECT FIRST ACCOUNT
+        // -----------------------------
+
+        WebElement fromAccountElement =
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        By.id("fromAccountId")
+                ));
+
+        Select fromAccount =
+                new Select(fromAccountElement);
+
+        List<WebElement> availableAccounts =
+                fromAccount.getOptions();
+
+        // Verify that accounts are available
+        assertFalse(
+                availableAccounts.isEmpty(),
+                "No funding accounts are available."
         );
 
-        int numberOfAccounts = fromAccount.getOptions().size();
+        /*
+         * Select the first/top account.
+         *
+         * This works regardless of the actual
+         * account number.
+         */
+        fromAccount.selectByIndex(0);
 
-        int randomIndex = new Random().nextInt(numberOfAccounts);
+        // Get selected account number
+        String selectedAccount =
+                fromAccount
+                        .getFirstSelectedOption()
+                        .getText()
+                        .trim();
 
-        fromAccount.selectByIndex(randomIndex);
+        System.out.println(
+                "Funding account selected: " + selectedAccount
+        );
 
-        // Wait until the Open New Account button is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.cssSelector("input[value='Open New Account']")
-        )).click();
+        // -----------------------------
+        // STEP 5: OPEN ACCOUNT
+        // -----------------------------
 
-        // Wait for account creation result
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.id("openAccountResult")
-        ));
+        WebElement openAccountButton =
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        By.cssSelector(
+                                "input[value='Open New Account']"
+                        )
+                ));
 
-        // Wait until the newly generated account number is populated
-        wait.until(driver -> {
-            String accountNumber = driver.findElement(
-                    By.id("newAccountId")
-            ).getText().trim();
+        openAccountButton.click();
+
+        // -----------------------------
+        // STEP 6: WAIT FOR RESULT
+        // -----------------------------
+
+        WebElement result =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        By.id("openAccountResult")
+                ));
+
+        // -----------------------------
+        // STEP 7: WAIT FOR NEW ACCOUNT NUMBER
+        // -----------------------------
+
+        wait.until(webDriver -> {
+
+            WebElement newAccountElement =
+                    webDriver.findElement(
+                            By.id("newAccountId")
+                    );
+
+            String accountNumber =
+                    newAccountElement.getText().trim();
 
             return !accountNumber.isEmpty();
         });
 
-        // Get the newly created account number
-        String newAccountNumber = driver.findElement(
-                By.id("newAccountId")
-        ).getText().trim();
+        // -----------------------------
+        // STEP 8: GET NEW ACCOUNT NUMBER
+        // -----------------------------
 
-        // Verify account number was generated
+        String newAccountNumber =
+                driver.findElement(
+                        By.id("newAccountId")
+                ).getText().trim();
+
+        System.out.println(
+                "New CHECKING account number: "
+                        + newAccountNumber
+        );
+
+        // -----------------------------
+        // STEP 9: ASSERT ACCOUNT NUMBER
+        // -----------------------------
+
         assertFalse(
                 newAccountNumber.isEmpty(),
                 "New account number should be generated."
         );
 
-        // Verify successful account creation
-        String pageText = driver.findElement(
-                By.id("openAccountResult")
-        ).getText();
+        // -----------------------------
+        // STEP 10: VERIFY SUCCESS MESSAGE
+        // -----------------------------
+
+        String resultText =
+                result.getText();
+
+        System.out.println(
+                "Account creation result: "
+                        + resultText
+        );
 
         assertTrue(
-                pageText.contains("Account Opened"),
+                resultText.contains("Account Opened"),
                 "The CHECKING account was not opened successfully."
+        );
+
+        System.out.println(
+                "TEST PASSED - CHECKING account "
+                        + newAccountNumber
+                        + " created using funding account "
+                        + selectedAccount
         );
     }
 
     @AfterEach
     void tearDown() {
+
+        // Close browser after test
         if (driver != null) {
             driver.quit();
         }
