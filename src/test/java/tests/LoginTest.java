@@ -83,7 +83,7 @@ public class LoginTest extends BaseTest {
 
     @BeforeEach
     public void initPage() {
-        driver.get(BASE_URL + "/index.htm");
+        driver.get(baseUrl + "/index.htm");
         loginPage = new LoginPage(driver);
     }
 
